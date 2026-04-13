@@ -11,14 +11,14 @@
 
 <style>
   :root {
-    --bg:        #080806;
-    --card:      #1E1A16;
-    --card2:     #261F18;
-    --border:    rgba(212,146,78,0.13);
-    --gold:      #D4924E;
-    --gold-light:#EDD5AA;
-    --text:      #F2EDE5;
-    --muted:     rgba(242,237,229,0.48);
+    --bg:        #FDFCF8;
+    --card:      #F5EFE5;
+    --card2:     #EDE6DA;
+    --border:    rgba(160,100,30,0.14);
+    --gold:      #B86A18;
+    --gold-light:#D4924E;
+    --text:      #1C1408;
+    --muted:     rgba(28,20,8,0.52);
     --accent:    #D4924E;
   }
 
@@ -85,7 +85,7 @@
     transition: background 0.5s, backdrop-filter 0.5s, padding 0.5s;
   }
   nav.scrolled {
-    background: rgba(8,8,6,0.92);
+    background: rgba(253,252,248,0.94);
     backdrop-filter: blur(24px);
     -webkit-backdrop-filter: blur(24px);
     border-bottom: 1px solid var(--border);
@@ -154,9 +154,9 @@
   .hero-bg {
     position: absolute; inset: 0;
     background:
-      radial-gradient(ellipse 80% 60% at 50% 100%, rgba(212,146,78,0.08) 0%, transparent 70%),
-      radial-gradient(ellipse 60% 40% at 80% 20%, rgba(212,146,78,0.04) 0%, transparent 60%),
-      #080806;
+      radial-gradient(ellipse 80% 60% at 50% 100%, rgba(212,146,78,0.1) 0%, transparent 70%),
+      radial-gradient(ellipse 60% 40% at 80% 20%, rgba(212,146,78,0.06) 0%, transparent 60%),
+      #FDFCF8;
   }
 
   .hero-line {
@@ -303,10 +303,13 @@
 
   /* ── Footer ── */
   .footer-bg {
-    background:
-      radial-gradient(ellipse 100% 80% at 50% 100%, rgba(212,146,78,0.05) 0%, transparent 60%),
-      var(--card);
-    border-top: 1px solid var(--border);
+    background: #1C1408;
+    border-top: 3px solid var(--gold-light);
+  }
+  /* Footer text overrides so it stays readable on dark footer */
+  .footer-bg, .footer-bg * {
+    --text-on-footer: #F2EDE5;
+    --muted-on-footer: rgba(242,237,229,0.5);
   }
 
   /* ── Marquee ── */
@@ -360,7 +363,7 @@
   }
   .about-float-card {
     position: absolute;
-    background: rgba(8,8,6,0.92);
+    background: rgba(253,252,248,0.88);
     border: 1px solid var(--border);
     backdrop-filter: blur(12px);
     padding: 1.25rem 1.5rem;
@@ -424,7 +427,7 @@
   <div class="hero-line" style="left:50%;top:5%;height:20%;animation-delay:4s;"></div>
 
   <!-- Decorative large number -->
-  <div class="font-condensed" style="position:absolute;font-size:28vw;color:rgba(212,146,78,0.025);line-height:1;bottom:-2vw;left:50%;transform:translateX(-50%);white-space:nowrap;pointer-events:none;user-select:none;">SC</div>
+  <div class="font-condensed" style="position:absolute;font-size:28vw;color:rgba(160,100,30,0.06);line-height:1;bottom:-2vw;left:50%;transform:translateX(-50%);white-space:nowrap;pointer-events:none;user-select:none;">SC</div>
 
   <div class="max-w-7xl mx-auto px-6 lg:px-10 relative z-10 text-center" style="padding-top:6rem;">
 
@@ -666,7 +669,7 @@
     </div>
 
     <!-- Process strip -->
-    <div class="reveal" style="margin-top:4rem;padding:2.5rem;background:#161210;border:1px solid var(--border);display:flex;align-items:center;gap:0;flex-wrap:wrap;">
+    <div class="reveal" style="margin-top:4rem;padding:2.5rem;background:var(--card);border:1px solid var(--border);display:flex;align-items:center;gap:0;flex-wrap:wrap;">
       <div style="flex:1;min-width:180px;padding:1rem 1.5rem;border-right:1px solid var(--border);">
         <div style="font-size:0.6rem;letter-spacing:0.2em;color:var(--gold);text-transform:uppercase;margin-bottom:0.4rem;">Стъпка 01</div>
         <div style="font-size:0.95rem;color:var(--text);">Консултация &amp; оферта</div>
@@ -976,8 +979,8 @@
   inset: 0;
   background: linear-gradient(
     to top,
-    rgba(8,8,6,0.82) 0%,
-    rgba(8,8,6,0.25) 35%,
+    rgba(8,5,2,0.85) 0%,
+    rgba(8,5,2,0.22) 40%,
     transparent 65%
   );
   z-index: 1;
@@ -1125,15 +1128,15 @@
 <!-- ═══════════════════════════════════════════
      CTA BANNER
 ═══════════════════════════════════════════ -->
-<section style="padding:6rem 0;background:var(--card);border-top:1px solid var(--border);border-bottom:1px solid var(--border);overflow:hidden;position:relative;">
+<section style="padding:6rem 0;background:#1C1408;border-top:none;border-bottom:none;overflow:hidden;position:relative;">
   <div style="position:absolute;inset:0;background:radial-gradient(ellipse 80% 100% at 50% 50%,rgba(212,146,78,0.06),transparent 60%);"></div>
   <div class="max-w-5xl mx-auto px-6 text-center relative z-10">
-    <p class="reveal font-condensed" style="font-size:0.85rem;letter-spacing:0.3em;color:var(--gold);text-transform:uppercase;margin-bottom:1.5rem;">Безплатна консултация</p>
-    <h2 class="font-display reveal reveal-delay-1" style="font-size:clamp(2.5rem,6vw,5.5rem);line-height:1.05;font-weight:600;margin-bottom:2rem;">
+    <p class="reveal font-condensed" style="font-size:0.85rem;letter-spacing:0.3em;color:var(--gold-light);text-transform:uppercase;margin-bottom:1.5rem;">Безплатна консултация</p>
+    <h2 class="font-display reveal reveal-delay-1" style="font-size:clamp(2.5rem,6vw,5.5rem);line-height:1.05;font-weight:600;color:#F2EDE5;margin-bottom:2rem;">
       Имате стара кухня или<br>
-      <em style="font-style:italic;color:var(--gold);">нови МДФ детайли?</em>
+      <em style="font-style:italic;color:var(--gold-light);">нови МДФ детайли?</em>
     </h2>
-    <p class="reveal reveal-delay-2" style="font-size:1rem;color:var(--muted);max-width:480px;margin:0 auto 2.5rem;line-height:1.8;">
+    <p class="reveal reveal-delay-2" style="font-size:1rem;color:rgba(242,237,229,0.6);max-width:480px;margin:0 auto 2.5rem;line-height:1.8;">
       Свържете се с нас за оферта. Отговаряме в рамките на 24 часа.
     </p>
     <div class="reveal reveal-delay-3" style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
@@ -1156,45 +1159,44 @@
 <footer id="contact" class="footer-bg" style="padding:5rem 0 2rem;">
   <div class="max-w-7xl mx-auto px-6 lg:px-10">
 
-    <!-- Top: Logo + Contact info + Map placeholder -->
     <div style="display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:4rem;margin-bottom:4rem;flex-wrap:wrap;" class="footer-grid">
 
       <!-- Brand -->
       <div>
         <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:1.5rem;">
-          <div style="width:2px;height:2.2rem;background:var(--gold);"></div>
+          <div style="width:2px;height:2.2rem;background:var(--gold-light);"></div>
           <div>
-            <div class="font-display" style="font-size:1.3rem;font-weight:600;color:var(--text);">София Колор ЕООД</div>
-            <div style="font-size:0.6rem;letter-spacing:0.2em;color:var(--muted);text-transform:uppercase;">Финиш с характер</div>
+            <div class="font-display" style="font-size:1.3rem;font-weight:600;color:#F2EDE5;">София Колор ЕООД</div>
+            <div style="font-size:0.6rem;letter-spacing:0.2em;color:rgba(242,237,229,0.5);text-transform:uppercase;">Финиш с характер</div>
           </div>
         </div>
-        <p style="color:var(--muted);font-size:0.88rem;line-height:1.9;max-width:300px;">
+        <p style="color:rgba(242,237,229,0.5);font-size:0.88rem;line-height:1.9;max-width:300px;">
           Специализирани в боядисване и финиширане на мебели и дървени повърхности в гр. София.
         </p>
         <div style="display:flex;gap:0.75rem;margin-top:1.5rem;">
           <a href="viber://chat?number=+359894891113" style="width:36px;height:36px;background:rgba(115,96,242,0.15);border:1px solid rgba(115,96,242,0.3);display:flex;align-items:center;justify-content:center;transition:all 0.3s;" onmouseover="this.style.background='rgba(115,96,242,0.3)'" onmouseout="this.style.background='rgba(115,96,242,0.15)'">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="rgba(115,96,242,0.9)"><path d="M11.4 0C5.1 0 0 4.8 0 10.7c0 3.5 1.8 6.7 4.6 8.7v3.6l3.4-1.9c1.1.3 2.2.5 3.4.5 6.3 0 11.4-4.8 11.4-10.7C22.8 4.8 17.7 0 11.4 0zm1.1 14.4l-2.9-3.1-5.6 3.1 6.2-6.6 3 3.1 5.5-3.1-6.2 6.6z"/></svg>
           </a>
-          <a href="tel:+359894891113" style="width:36px;height:36px;background:rgba(212,146,78,0.08);border:1px solid rgba(212,146,78,0.2);display:flex;align-items:center;justify-content:center;transition:all 0.3s;" onmouseover="this.style.background='rgba(212,146,78,0.18)'" onmouseout="this.style.background='rgba(212,146,78,0.08)'">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10a19.79 19.79 0 01-3.07-8.67A2 2 0 012 .84h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+          <a href="tel:+359894891113" style="width:36px;height:36px;background:rgba(212,146,78,0.1);border:1px solid rgba(212,146,78,0.25);display:flex;align-items:center;justify-content:center;transition:all 0.3s;" onmouseover="this.style.background='rgba(212,146,78,0.22)'" onmouseout="this.style.background='rgba(212,146,78,0.1)'">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--gold-light)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10a19.79 19.79 0 01-3.07-8.67A2 2 0 012 .84h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
           </a>
         </div>
       </div>
 
       <!-- Contact details -->
       <div>
-        <div style="font-size:0.65rem;letter-spacing:0.2em;color:var(--gold);text-transform:uppercase;margin-bottom:1.5rem;">📍 Контакт</div>
+        <div style="font-size:0.65rem;letter-spacing:0.2em;color:var(--gold-light);text-transform:uppercase;margin-bottom:1.5rem;">📍 Контакт</div>
         <div style="display:flex;flex-direction:column;gap:1.25rem;">
           <div>
-            <div style="font-size:0.7rem;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.3rem;">Адрес</div>
-            <div style="font-size:0.9rem;color:var(--text);line-height:1.6;">гр. София, кв. Военна рампа,<br>ул. „Коце Ципушев" 10-12</div>
+            <div style="font-size:0.7rem;color:rgba(242,237,229,0.4);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.3rem;">Адрес</div>
+            <div style="font-size:0.9rem;color:#F2EDE5;line-height:1.6;">гр. София, кв. Военна рампа,<br>ул. „Коце Ципушев" 10-12</div>
           </div>
           <div>
-            <div style="font-size:0.7rem;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.3rem;">Телефон</div>
-            <a href="tel:+359894891113" style="font-size:1.05rem;color:var(--text);text-decoration:none;border-bottom:1px solid rgba(212,146,78,0.3);padding-bottom:2px;transition:color 0.3s;" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--text)'">0894 891 113</a>
+            <div style="font-size:0.7rem;color:rgba(242,237,229,0.4);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.3rem;">Телефон</div>
+            <a href="tel:+359894891113" style="font-size:1.05rem;color:#F2EDE5;text-decoration:none;border-bottom:1px solid rgba(212,146,78,0.35);padding-bottom:2px;transition:color 0.3s;" onmouseover="this.style.color='var(--gold-light)'" onmouseout="this.style.color='#F2EDE5'">0894 891 113</a>
           </div>
           <div>
-            <div style="font-size:0.7rem;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.3rem;">Viber</div>
+            <div style="font-size:0.7rem;color:rgba(242,237,229,0.4);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.3rem;">Viber</div>
             <a href="viber://chat?number=+359894891113" style="font-size:0.9rem;color:rgba(115,96,242,0.9);text-decoration:none;" onmouseover="this.style.opacity='0.7'" onmouseout="this.style.opacity='1'">Изпратете съобщение →</a>
           </div>
         </div>
@@ -1202,25 +1204,25 @@
 
       <!-- Quick links -->
       <div>
-        <div style="font-size:0.65rem;letter-spacing:0.2em;color:var(--gold);text-transform:uppercase;margin-bottom:1.5rem;">Навигация</div>
+        <div style="font-size:0.65rem;letter-spacing:0.2em;color:var(--gold-light);text-transform:uppercase;margin-bottom:1.5rem;">Навигация</div>
         <div style="display:flex;flex-direction:column;gap:0.9rem;">
-          <a href="#about" style="font-size:0.9rem;color:var(--muted);text-decoration:none;transition:color 0.3s;" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--muted)'">За нас</a>
-          <a href="#services" style="font-size:0.9rem;color:var(--muted);text-decoration:none;transition:color 0.3s;" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--muted)'">Нашите услуги</a>
-          <a href="#colors" style="font-size:0.9rem;color:var(--muted);text-decoration:none;transition:color 0.3s;" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--muted)'">Цветове и каталози</a>
-          <a href="#contact" style="font-size:0.9rem;color:var(--muted);text-decoration:none;transition:color 0.3s;" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--muted)'">Контакт</a>
+          <a href="#about"    style="font-size:0.9rem;color:rgba(242,237,229,0.5);text-decoration:none;transition:color 0.3s;" onmouseover="this.style.color='#F2EDE5'" onmouseout="this.style.color='rgba(242,237,229,0.5)'">За нас</a>
+          <a href="#services" style="font-size:0.9rem;color:rgba(242,237,229,0.5);text-decoration:none;transition:color 0.3s;" onmouseover="this.style.color='#F2EDE5'" onmouseout="this.style.color='rgba(242,237,229,0.5)'">Нашите услуги</a>
+          <a href="#colors"   style="font-size:0.9rem;color:rgba(242,237,229,0.5);text-decoration:none;transition:color 0.3s;" onmouseover="this.style.color='#F2EDE5'" onmouseout="this.style.color='rgba(242,237,229,0.5)'">Цветове и каталози</a>
+          <a href="#contact"  style="font-size:0.9rem;color:rgba(242,237,229,0.5);text-decoration:none;transition:color 0.3s;" onmouseover="this.style.color='#F2EDE5'" onmouseout="this.style.color='rgba(242,237,229,0.5)'">Контакт</a>
         </div>
       </div>
 
     </div>
 
     <!-- Bottom bar -->
-    <div style="border-top:1px solid var(--border);padding-top:2rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;">
-      <div style="font-size:0.75rem;color:var(--muted);">
+    <div style="border-top:1px solid rgba(212,146,78,0.15);padding-top:2rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;">
+      <div style="font-size:0.75rem;color:rgba(242,237,229,0.35);">
         © 2025 София Колор ЕООД. Всички права запазени.
       </div>
       <div style="display:flex;align-items:center;gap:0.5rem;">
-        <div style="width:6px;height:6px;border-radius:50%;background:var(--gold);animation:pulse 2s infinite;"></div>
-        <span style="font-size:0.72rem;color:var(--muted);letter-spacing:0.05em;">Приемаме нови поръчки</span>
+        <div style="width:6px;height:6px;border-radius:50%;background:var(--gold-light);animation:pulse 2s infinite;"></div>
+        <span style="font-size:0.72rem;color:rgba(242,237,229,0.4);letter-spacing:0.05em;">Приемаме нови поръчки</span>
       </div>
     </div>
   </div>
@@ -1234,7 +1236,7 @@
   <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M11.4 0C5.1 0 0 4.8 0 10.7c0 3.5 1.8 6.7 4.6 8.7v3.6l3.4-1.9c1.1.3 2.2.5 3.4.5 6.3 0 11.4-4.8 11.4-10.7C22.8 4.8 17.7 0 11.4 0zm1.1 14.4l-2.9-3.1-5.6 3.1 6.2-6.6 3 3.1 5.5-3.1-6.2 6.6z"/></svg>
 
   <!-- Tooltip -->
-  <div style="position:absolute;right:calc(100% + 0.75rem);top:50%;transform:translateY(-50%);background:rgba(8,8,6,0.92);border:1px solid rgba(255,255,255,0.1);padding:0.4rem 0.8rem;white-space:nowrap;font-size:0.72rem;letter-spacing:0.05em;color:white;backdrop-filter:blur(8px);pointer-events:none;opacity:0;transition:opacity 0.3s;" class="viber-tooltip">
+  <div style="position:absolute;right:calc(100% + 0.75rem);top:50%;transform:translateY(-50%);background:rgba(28,20,8,0.92);border:1px solid rgba(212,146,78,0.2);padding:0.4rem 0.8rem;white-space:nowrap;font-size:0.72rem;letter-spacing:0.05em;color:#F2EDE5;backdrop-filter:blur(8px);pointer-events:none;opacity:0;transition:opacity 0.3s;" class="viber-tooltip">
     Viber съобщение
   </div>
 </a>
