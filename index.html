@@ -1,0 +1,916 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>София Колор ЕООД — Професионално боядисване на мебели</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=DM+Sans:wght@300;400;500&family=Bebas+Neue&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --bg: #050505;
+    --card: #0f0f0f;
+    --card2: #141414;
+    --border: rgba(255,255,255,0.06);
+    --gold: #C9A96E;
+    --gold-light: #E8CFA0;
+    --text: #F0EDE8;
+    --muted: rgba(240,237,232,0.45);
+    --accent: #C9A96E;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── Noise texture overlay ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.4;
+  }
+
+  /* ── Typography ── */
+  .font-display { font-family: 'Cormorant Garamond', serif; }
+  .font-condensed { font-family: 'Bebas Neue', sans-serif; letter-spacing: 0.05em; }
+  .font-body { font-family: 'DM Sans', sans-serif; }
+
+  /* ── Gold gradient text ── */
+  .text-gold { color: var(--gold); }
+  .text-gold-gradient {
+    background: linear-gradient(135deg, #C9A96E 0%, #E8CFA0 50%, #C9A96E 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* ── Hairline borders ── */
+  .border-hair { border-color: var(--border); }
+
+  /* ── Section reveal ── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.9s cubic-bezier(0.16,1,0.3,1), transform 0.9s cubic-bezier(0.16,1,0.3,1);
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+  .reveal-delay-4 { transition-delay: 0.4s; }
+  .reveal-delay-5 { transition-delay: 0.5s; }
+
+  /* ── Nav ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 1.25rem 0;
+    transition: background 0.4s, backdrop-filter 0.4s;
+  }
+  nav.scrolled {
+    background: rgba(5,5,5,0.88);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  /* ── Hero ── */
+  .hero-bg {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 50% 100%, rgba(201,169,110,0.08) 0%, transparent 70%),
+      radial-gradient(ellipse 60% 40% at 80% 20%, rgba(201,169,110,0.04) 0%, transparent 60%),
+      #050505;
+  }
+
+  .hero-line {
+    position: absolute;
+    width: 1px;
+    background: linear-gradient(to bottom, transparent, rgba(201,169,110,0.3), transparent);
+    animation: lineFloat 8s ease-in-out infinite;
+  }
+
+  @keyframes lineFloat {
+    0%, 100% { opacity: 0.3; transform: scaleY(1); }
+    50% { opacity: 0.7; transform: scaleY(1.1); }
+  }
+
+  /* ── CTA Button ── */
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 1rem 2.4rem;
+    background: transparent;
+    color: var(--gold);
+    border: 1px solid var(--gold);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    text-decoration: none;
+    position: relative;
+    overflow: hidden;
+    transition: color 0.4s;
+    cursor: pointer;
+  }
+  .btn-primary::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--gold);
+    transform: translateX(-101%);
+    transition: transform 0.4s cubic-bezier(0.16,1,0.3,1);
+  }
+  .btn-primary:hover::before { transform: translateX(0); }
+  .btn-primary:hover { color: #050505; }
+  .btn-primary span { position: relative; z-index: 1; }
+  .btn-primary svg { position: relative; z-index: 1; }
+
+  /* ── Service Cards ── */
+  .service-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 2.5rem;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.4s, transform 0.4s cubic-bezier(0.16,1,0.3,1);
+  }
+  .service-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    transform: scaleX(0);
+    transition: transform 0.5s cubic-bezier(0.16,1,0.3,1);
+  }
+  .service-card:hover::before { transform: scaleX(1); }
+  .service-card:hover {
+    border-color: rgba(201,169,110,0.2);
+    transform: translateY(-4px);
+  }
+
+  .service-number {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 4.5rem;
+    line-height: 1;
+    color: rgba(201,169,110,0.08);
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    transition: color 0.4s;
+  }
+  .service-card:hover .service-number { color: rgba(201,169,110,0.15); }
+
+  /* ── Color system badges ── */
+  .color-badge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 2.5rem;
+    background: var(--card);
+    border: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.4s, transform 0.4s cubic-bezier(0.16,1,0.3,1);
+    cursor: default;
+  }
+  .color-badge::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 50% 120%, rgba(201,169,110,0.06), transparent 70%);
+    opacity: 0;
+    transition: opacity 0.4s;
+  }
+  .color-badge:hover::after { opacity: 1; }
+  .color-badge:hover {
+    border-color: rgba(201,169,110,0.25);
+    transform: translateY(-2px);
+  }
+
+  /* ── Divider ── */
+  .gold-divider {
+    width: 3rem;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+
+  /* ── Viber FAB ── */
+  .viber-fab {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    z-index: 200;
+    width: 3.5rem;
+    height: 3.5rem;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #7360f2, #5d4fe8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 32px rgba(115,96,242,0.4), 0 0 0 0 rgba(115,96,242,0.4);
+    animation: viberPulse 3s infinite;
+    transition: transform 0.3s cubic-bezier(0.16,1,0.3,1), box-shadow 0.3s;
+    text-decoration: none;
+  }
+  .viber-fab:hover {
+    transform: scale(1.1) translateY(-2px);
+    box-shadow: 0 16px 48px rgba(115,96,242,0.5), 0 0 0 0 rgba(115,96,242,0);
+  }
+  @keyframes viberPulse {
+    0%, 100% { box-shadow: 0 8px 32px rgba(115,96,242,0.4), 0 0 0 0 rgba(115,96,242,0.3); }
+    50% { box-shadow: 0 8px 32px rgba(115,96,242,0.4), 0 0 0 12px rgba(115,96,242,0); }
+  }
+
+  /* ── Footer ── */
+  .footer-bg {
+    background:
+      radial-gradient(ellipse 100% 80% at 50% 100%, rgba(201,169,110,0.05) 0%, transparent 60%),
+      var(--card);
+    border-top: 1px solid var(--border);
+  }
+
+  /* ── Marquee ── */
+  .marquee-track {
+    display: flex;
+    gap: 4rem;
+    white-space: nowrap;
+    animation: marqueeScroll 20s linear infinite;
+  }
+  @keyframes marqueeScroll {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* ── Scroll indicator ── */
+  .scroll-line {
+    width: 1px;
+    height: 4rem;
+    background: linear-gradient(to bottom, var(--gold), transparent);
+    animation: scrollBounce 2s ease-in-out infinite;
+  }
+  @keyframes scrollBounce {
+    0%, 100% { opacity: 0.6; transform: scaleY(1); }
+    50% { opacity: 1; transform: scaleY(1.2); }
+  }
+
+  /* ── About image placeholder ── */
+  .about-visual {
+    position: relative;
+    height: 520px;
+  }
+  .about-visual-inner {
+    position: absolute;
+    inset: 0;
+    background: var(--card2);
+    border: 1px solid var(--border);
+    overflow: hidden;
+  }
+  .about-visual-inner::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 40px,
+        rgba(201,169,110,0.02) 40px,
+        rgba(201,169,110,0.02) 41px
+      );
+  }
+  .about-float-card {
+    position: absolute;
+    background: rgba(5,5,5,0.9);
+    border: 1px solid var(--border);
+    backdrop-filter: blur(12px);
+    padding: 1.25rem 1.5rem;
+  }
+
+  /* Tag pill */
+  .tag-pill {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border: 1px solid rgba(201,169,110,0.3);
+    color: var(--gold);
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    font-family: 'DM Sans', sans-serif;
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════
+     NAV
+═══════════════════════════════════════════ -->
+<nav id="nav">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10 flex items-center justify-between">
+    <!-- Logo -->
+    <div class="flex items-center gap-3">
+      <div style="width:2px;height:2.2rem;background:var(--gold);"></div>
+      <div>
+        <div class="font-display text-white font-semibold" style="font-size:1.05rem;letter-spacing:0.02em;">София Колор</div>
+        <div style="font-size:0.6rem;letter-spacing:0.25em;color:var(--muted);text-transform:uppercase;margin-top:1px;">ЕООД</div>
+      </div>
+    </div>
+
+    <!-- Desktop nav links -->
+    <div class="hidden md:flex items-center gap-8">
+      <a href="#about" style="font-size:0.75rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color 0.3s;" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--muted)'">За нас</a>
+      <a href="#services" style="font-size:0.75rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color 0.3s;" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--muted)'">Услуги</a>
+      <a href="#colors" style="font-size:0.75rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color 0.3s;" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--muted)'">Цветове</a>
+      <a href="#contact" class="btn-primary" style="padding:0.6rem 1.4rem;">
+        <span>Контакт</span>
+      </a>
+    </div>
+  </div>
+</nav>
+
+
+<!-- ═══════════════════════════════════════════
+     HERO
+═══════════════════════════════════════════ -->
+<section style="min-height:100vh;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;">
+  <div class="hero-bg"></div>
+
+  <!-- Decorative vertical lines -->
+  <div class="hero-line" style="left:8%;top:15%;height:30%;"></div>
+  <div class="hero-line" style="right:8%;top:30%;height:40%;animation-delay:2s;"></div>
+  <div class="hero-line" style="left:50%;top:5%;height:20%;animation-delay:4s;"></div>
+
+  <!-- Decorative large number -->
+  <div class="font-condensed" style="position:absolute;font-size:28vw;color:rgba(201,169,110,0.025);line-height:1;bottom:-2vw;left:50%;transform:translateX(-50%);white-space:nowrap;pointer-events:none;user-select:none;">SC</div>
+
+  <div class="max-w-7xl mx-auto px-6 lg:px-10 relative z-10 text-center" style="padding-top:6rem;">
+
+    <div class="reveal" style="margin-bottom:2rem;">
+      <span class="tag-pill">Гр. София · Основана 2010</span>
+    </div>
+
+    <h1 class="font-display reveal reveal-delay-1" style="font-size:clamp(2.8rem,7vw,7.5rem);line-height:1.02;font-weight:600;max-width:900px;margin:0 auto 1.8rem;">
+      Професионално<br>
+      <em style="font-style:italic;color:var(--gold);">боядисване</em> на<br>
+      мебели и детайли
+    </h1>
+
+    <p class="reveal reveal-delay-2 font-body" style="font-size:1.1rem;color:var(--muted);max-width:520px;margin:0 auto 3rem;line-height:1.75;font-weight:300;">
+      Модерни решения, устойчиви на времето,<br>и безупречен финиш.
+    </p>
+
+    <div class="reveal reveal-delay-3" style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
+      <a href="#contact" class="btn-primary">
+        <span>Свържете се с нас</span>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+      <a href="#services" class="btn-primary" style="border-color:var(--border);color:var(--muted);" onmouseover="this.style.color='#050505'" onmouseout="this.style.color='var(--muted)'">
+        <span>Нашите услуги</span>
+      </a>
+    </div>
+
+    <!-- Scroll indicator -->
+    <div style="margin-top:5rem;display:flex;flex-direction:column;align-items:center;gap:0.75rem;">
+      <div class="scroll-line"></div>
+      <span style="font-size:0.6rem;letter-spacing:0.2em;color:var(--muted);text-transform:uppercase;">Прелисти</span>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════
+     MARQUEE STRIP
+═══════════════════════════════════════════ -->
+<div style="border-top:1px solid var(--border);border-bottom:1px solid var(--border);overflow:hidden;padding:1rem 0;background:var(--card);">
+  <div class="marquee-track font-condensed" style="color:var(--muted);font-size:0.85rem;letter-spacing:0.2em;">
+    <!-- duplicated for seamless loop -->
+    <span>МДФ БОЯДИСВАНЕ</span><span style="color:var(--gold);">✦</span>
+    <span>КУХНИ И ГАРДЕРОБИ</span><span style="color:var(--gold);">✦</span>
+    <span>ЕСТЕСТВЕН ФУРНИР</span><span style="color:var(--gold);">✦</span>
+    <span>RAL · NCS · PANTONE</span><span style="color:var(--gold);">✦</span>
+    <span>ПВЦ ДЕТАЙЛИ</span><span style="color:var(--gold);">✦</span>
+    <span>ИНТЕРИОРНИ ВРАТИ</span><span style="color:var(--gold);">✦</span>
+    <span>БЕЗУПРЕЧЕН ФИНИШ</span><span style="color:var(--gold);">✦</span>
+
+    <span>МДФ БОЯДИСВАНЕ</span><span style="color:var(--gold);">✦</span>
+    <span>КУХНИ И ГАРДЕРОБИ</span><span style="color:var(--gold);">✦</span>
+    <span>ЕСТЕСТВЕН ФУРНИР</span><span style="color:var(--gold);">✦</span>
+    <span>RAL · NCS · PANTONE</span><span style="color:var(--gold);">✦</span>
+    <span>ПВЦ ДЕТАЙЛИ</span><span style="color:var(--gold);">✦</span>
+    <span>ИНТЕРИОРНИ ВРАТИ</span><span style="color:var(--gold);">✦</span>
+    <span>БЕЗУПРЕЧЕН ФИНИШ</span><span style="color:var(--gold);">✦</span>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════
+     ABOUT
+═══════════════════════════════════════════ -->
+<section id="about" style="padding:8rem 0;">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center;" class="about-grid">
+
+      <!-- Text -->
+      <div>
+        <div class="reveal" style="display:flex;align-items:center;gap:1rem;margin-bottom:2rem;">
+          <div class="gold-divider"></div>
+          <span style="font-size:0.65rem;letter-spacing:0.25em;color:var(--gold);text-transform:uppercase;">🎨 За нас</span>
+        </div>
+
+        <h2 class="font-display reveal reveal-delay-1" style="font-size:clamp(2.2rem,4vw,3.8rem);line-height:1.08;font-weight:600;margin-bottom:2rem;">
+          Вдъхваме <em style="font-style:italic;color:var(--gold);">нов живот</em><br>
+          на вашия интериор
+        </h2>
+
+        <p class="reveal reveal-delay-2" style="color:var(--muted);line-height:1.9;font-size:1rem;margin-bottom:2.5rem;">
+          Ние сме специализирана фирма в гр. София, посветена на обновяването и финиширането на мебели и дървени повърхности. В София Колор ЕООД вдъхваме нов живот на вашия интериор, като залагаме на прецизност, модерни технологии и висококачествени материали.
+        </p>
+
+        <!-- Stats -->
+        <div class="reveal reveal-delay-3" style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-bottom:2.5rem;">
+          <div style="padding:1.5rem;background:var(--card);border:1px solid var(--border);">
+            <div class="font-condensed text-gold-gradient" style="font-size:3rem;line-height:1;">15+</div>
+            <div style="font-size:0.75rem;color:var(--muted);letter-spacing:0.1em;margin-top:0.25rem;">Години опит</div>
+          </div>
+          <div style="padding:1.5rem;background:var(--card);border:1px solid var(--border);">
+            <div class="font-condensed text-gold-gradient" style="font-size:3rem;line-height:1;">500+</div>
+            <div style="font-size:0.75rem;color:var(--muted);letter-spacing:0.1em;margin-top:0.25rem;">Завършени проекта</div>
+          </div>
+        </div>
+
+        <div class="reveal reveal-delay-4">
+          <a href="#contact" class="btn-primary">
+            <span>Поискайте оферта</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Visual -->
+      <div class="about-visual reveal reveal-delay-2">
+        <div class="about-visual-inner">
+          <!-- Abstract gradient composition -->
+          <div style="position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 30% 70%,rgba(201,169,110,0.12),transparent 60%),radial-gradient(ellipse 50% 40% at 80% 20%,rgba(201,169,110,0.06),transparent 50%);"></div>
+
+          <!-- Grid lines -->
+          <svg style="position:absolute;inset:0;width:100%;height:100%;opacity:0.12" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <pattern id="grid" width="60" height="60" patternUnits="userSpaceOnUse">
+                <path d="M 60 0 L 0 0 0 60" fill="none" stroke="rgba(201,169,110,0.5)" stroke-width="0.5"/>
+              </pattern>
+            </defs>
+            <rect width="100%" height="100%" fill="url(#grid)"/>
+          </svg>
+
+          <!-- Central icon -->
+          <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;">
+            <div class="font-condensed text-gold" style="font-size:7rem;opacity:0.15;line-height:1;">SC</div>
+          </div>
+
+          <!-- Color swatches strip -->
+          <div style="position:absolute;bottom:0;left:0;right:0;display:flex;height:5rem;">
+            <div style="flex:1;background:#1a1410;"></div>
+            <div style="flex:1;background:#2c1f0e;"></div>
+            <div style="flex:1;background:#3d2b12;"></div>
+            <div style="flex:1;background:#c9a96e;"></div>
+            <div style="flex:1;background:#e8cfa0;"></div>
+            <div style="flex:1;background:#f5e8cc;"></div>
+            <div style="flex:1;background:#1c2228;"></div>
+            <div style="flex:1;background:#2a3540;"></div>
+          </div>
+        </div>
+
+        <!-- Float card -->
+        <div class="about-float-card" style="bottom:6.5rem;right:-1.5rem;max-width:200px;">
+          <div style="font-size:0.6rem;letter-spacing:0.18em;color:var(--gold);text-transform:uppercase;margin-bottom:0.5rem;">Материали</div>
+          <div style="font-size:0.8rem;color:var(--text);line-height:1.6;">МДФ · Фурнир<br>ПВЦ · Естествено дърво</div>
+        </div>
+
+        <!-- Float badge -->
+        <div class="about-float-card" style="top:2rem;left:-1.5rem;">
+          <div style="font-size:0.6rem;letter-spacing:0.18em;color:var(--muted);text-transform:uppercase;margin-bottom:0.3rem;">Локация</div>
+          <div style="font-size:0.85rem;color:var(--text);font-weight:500;">София, България</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════
+     SERVICES
+═══════════════════════════════════════════ -->
+<section id="services" style="padding:8rem 0;background:var(--card);border-top:1px solid var(--border);">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10">
+
+    <div style="display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:4rem;flex-wrap:gap;gap:2rem;">
+      <div>
+        <div class="reveal" style="display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem;">
+          <div class="gold-divider"></div>
+          <span style="font-size:0.65rem;letter-spacing:0.25em;color:var(--gold);text-transform:uppercase;">🛠 Нашите услуги</span>
+        </div>
+        <h2 class="font-display reveal reveal-delay-1" style="font-size:clamp(2.2rem,4vw,3.8rem);line-height:1.08;font-weight:600;">
+          Всичко за<br><em style="font-style:italic;color:var(--gold);">вашия интериор</em>
+        </h2>
+      </div>
+      <div class="reveal reveal-delay-2" style="max-width:280px;">
+        <p style="color:var(--muted);font-size:0.9rem;line-height:1.8;">
+          От кухни и гардероби до интериорни врати — работим с най-добрите материали и технологии.
+        </p>
+      </div>
+    </div>
+
+    <!-- Service Cards Grid -->
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);" class="services-grid">
+
+      <!-- Card 1 -->
+      <div class="service-card reveal reveal-delay-1">
+        <div class="service-number">01</div>
+        <div style="margin-bottom:1.5rem;">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="7" height="18"/><rect x="14" y="3" width="7" height="9"/><rect x="14" y="16" width="7" height="5"/>
+          </svg>
+        </div>
+        <h3 class="font-display" style="font-size:1.8rem;font-weight:600;margin-bottom:0.75rem;line-height:1.1;">Мебели</h3>
+        <p style="color:var(--muted);font-size:0.9rem;line-height:1.8;margin-bottom:1.5rem;">
+          Прецизно боядисване и финиширане на кухненски шкафове, гардероби, маси и всякакви мебелни корпуси.
+        </p>
+        <div style="display:flex;flex-wrap:wrap;gap:0.5rem;">
+          <span class="tag-pill">Кухни</span>
+          <span class="tag-pill">Гардероби</span>
+          <span class="tag-pill">Маси</span>
+        </div>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="service-card reveal reveal-delay-2">
+        <div class="service-number">02</div>
+        <div style="margin-bottom:1.5rem;">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0h10a2 2 0 0 0 2-2v-4M9 21H5a2 2 0 0 1-2-2v-4m0 0h18"/>
+          </svg>
+        </div>
+        <h3 class="font-display" style="font-size:1.8rem;font-weight:600;margin-bottom:0.75rem;line-height:1.1;">Интериорни елементи</h3>
+        <p style="color:var(--muted);font-size:0.9rem;line-height:1.8;margin-bottom:1.5rem;">
+          Боядисване на интериорни врати, первази и декоративни елементи с висококачествени покрития.
+        </p>
+        <div style="display:flex;flex-wrap:wrap;gap:0.5rem;">
+          <span class="tag-pill">Врати</span>
+          <span class="tag-pill">Первази</span>
+          <span class="tag-pill">Декор</span>
+        </div>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="service-card reveal reveal-delay-3">
+        <div class="service-number">03</div>
+        <div style="margin-bottom:1.5rem;">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+          </svg>
+        </div>
+        <h3 class="font-display" style="font-size:1.8rem;font-weight:600;margin-bottom:0.75rem;line-height:1.1;">Материали</h3>
+        <p style="color:var(--muted);font-size:0.9rem;line-height:1.8;margin-bottom:1.5rem;">
+          Работим с МДФ плоскости, естествен фурнир и ПВЦ детайли, осигурявайки дълготраен и елегантен вид.
+        </p>
+        <div style="display:flex;flex-wrap:wrap;gap:0.5rem;">
+          <span class="tag-pill">МДФ</span>
+          <span class="tag-pill">Фурнир</span>
+          <span class="tag-pill">ПВЦ</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Process strip -->
+    <div class="reveal" style="margin-top:4rem;padding:2.5rem;background:#0a0a0a;border:1px solid var(--border);display:flex;align-items:center;gap:0;flex-wrap:wrap;">
+      <div style="flex:1;min-width:180px;padding:1rem 1.5rem;border-right:1px solid var(--border);">
+        <div style="font-size:0.6rem;letter-spacing:0.2em;color:var(--gold);text-transform:uppercase;margin-bottom:0.4rem;">Стъпка 01</div>
+        <div style="font-size:0.95rem;color:var(--text);">Консултация &amp; оферта</div>
+      </div>
+      <div style="flex:1;min-width:180px;padding:1rem 1.5rem;border-right:1px solid var(--border);">
+        <div style="font-size:0.6rem;letter-spacing:0.2em;color:var(--gold);text-transform:uppercase;margin-bottom:0.4rem;">Стъпка 02</div>
+        <div style="font-size:0.95rem;color:var(--text);">Подготовка на повърхности</div>
+      </div>
+      <div style="flex:1;min-width:180px;padding:1rem 1.5rem;border-right:1px solid var(--border);">
+        <div style="font-size:0.6rem;letter-spacing:0.2em;color:var(--gold);text-transform:uppercase;margin-bottom:0.4rem;">Стъпка 03</div>
+        <div style="font-size:0.95rem;color:var(--text);">Нанасяне на покритие</div>
+      </div>
+      <div style="flex:1;min-width:180px;padding:1rem 1.5rem;">
+        <div style="font-size:0.6rem;letter-spacing:0.2em;color:var(--gold);text-transform:uppercase;margin-bottom:0.4rem;">Стъпка 04</div>
+        <div style="font-size:0.95rem;color:var(--text);">Контрол на качеството</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════
+     COLOR SYSTEMS
+═══════════════════════════════════════════ -->
+<section id="colors" style="padding:8rem 0;">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10">
+
+    <div style="text-align:center;margin-bottom:5rem;">
+      <div class="reveal" style="display:inline-flex;align-items:center;gap:1rem;margin-bottom:1.5rem;">
+        <div class="gold-divider"></div>
+        <span style="font-size:0.65rem;letter-spacing:0.25em;color:var(--gold);text-transform:uppercase;">🌈 Цветове и каталози</span>
+        <div class="gold-divider"></div>
+      </div>
+      <h2 class="font-display reveal reveal-delay-1" style="font-size:clamp(2.2rem,4vw,3.8rem);line-height:1.08;font-weight:600;max-width:600px;margin:0 auto;">
+        Работим с водещите<br>
+        <em style="font-style:italic;color:var(--gold);">цветни системи</em>
+      </h2>
+      <p class="reveal reveal-delay-2" style="margin-top:1.25rem;color:var(--muted);font-size:0.95rem;max-width:420px;margin-left:auto;margin-right:auto;line-height:1.8;">
+        Хиляди цветове от признати световни каталози за максимална точност и повторяемост.
+      </p>
+    </div>
+
+    <!-- Badges -->
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);" class="color-grid">
+
+      <!-- RAL -->
+      <div class="color-badge reveal reveal-delay-1">
+        <div style="text-align:center;">
+          <div style="display:flex;gap:6px;justify-content:center;margin-bottom:1.25rem;">
+            <div style="width:16px;height:16px;background:#c0392b;"></div>
+            <div style="width:16px;height:16px;background:#e67e22;"></div>
+            <div style="width:16px;height:16px;background:#f1c40f;"></div>
+            <div style="width:16px;height:16px;background:#2ecc71;"></div>
+            <div style="width:16px;height:16px;background:#3498db;"></div>
+            <div style="width:16px;height:16px;background:#9b59b6;"></div>
+          </div>
+          <div class="font-condensed" style="font-size:2.8rem;color:var(--text);letter-spacing:0.05em;">RAL</div>
+          <div style="font-size:0.65rem;letter-spacing:0.15em;color:var(--muted);margin-top:0.4rem;text-transform:uppercase;">Classic &amp; Design</div>
+          <div style="margin-top:0.75rem;font-size:0.75rem;color:var(--muted);">213 класически цвята</div>
+        </div>
+      </div>
+
+      <!-- NCS -->
+      <div class="color-badge reveal reveal-delay-2">
+        <div style="text-align:center;">
+          <div style="display:flex;gap:6px;justify-content:center;margin-bottom:1.25rem;">
+            <div style="width:16px;height:16px;background:#1a1a1a;border:1px solid rgba(255,255,255,0.15);"></div>
+            <div style="width:16px;height:16px;background:#e8e4df;border:1px solid rgba(255,255,255,0.1);"></div>
+            <div style="width:16px;height:16px;background:#c8a882;"></div>
+            <div style="width:16px;height:16px;background:#4a7c59;"></div>
+            <div style="width:16px;height:16px;background:#5a8fa8;"></div>
+            <div style="width:16px;height:16px;background:#a85a5a;"></div>
+          </div>
+          <div class="font-condensed" style="font-size:2.8rem;color:var(--text);letter-spacing:0.05em;">NCS</div>
+          <div style="font-size:0.65rem;letter-spacing:0.15em;color:var(--muted);margin-top:0.4rem;text-transform:uppercase;">Natural Colour System</div>
+          <div style="margin-top:0.75rem;font-size:0.75rem;color:var(--muted);">1950 нюанса</div>
+        </div>
+      </div>
+
+      <!-- PANTONE -->
+      <div class="color-badge reveal reveal-delay-3">
+        <div style="text-align:center;">
+          <div style="display:flex;gap:6px;justify-content:center;margin-bottom:1.25rem;">
+            <div style="width:16px;height:16px;background:#e91e63;"></div>
+            <div style="width:16px;height:16px;background:#ff5722;"></div>
+            <div style="width:16px;height:16px;background:#ffc107;"></div>
+            <div style="width:16px;height:16px;background:#00bcd4;"></div>
+            <div style="width:16px;height:16px;background:#673ab7;"></div>
+            <div style="width:16px;height:16px;background:#607d8b;"></div>
+          </div>
+          <div class="font-condensed" style="font-size:2.8rem;color:var(--text);letter-spacing:0.05em;">PANTONE</div>
+          <div style="font-size:0.65rem;letter-spacing:0.15em;color:var(--muted);margin-top:0.4rem;text-transform:uppercase;">Matching System</div>
+          <div style="margin-top:0.75rem;font-size:0.75rem;color:var(--muted);">3000+ цвята</div>
+        </div>
+      </div>
+
+      <!-- VERNILAK -->
+      <div class="color-badge reveal reveal-delay-4">
+        <div style="text-align:center;">
+          <div style="display:flex;gap:6px;justify-content:center;margin-bottom:1.25rem;">
+            <div style="width:16px;height:16px;background:#c9a96e;"></div>
+            <div style="width:16px;height:16px;background:#8b6914;"></div>
+            <div style="width:16px;height:16px;background:#d4b896;"></div>
+            <div style="width:16px;height:16px;background:#2c4a3e;"></div>
+            <div style="width:16px;height:16px;background:#4a3728;"></div>
+            <div style="width:16px;height:16px;background:#e8e0d0;border:1px solid rgba(255,255,255,0.1);"></div>
+          </div>
+          <div class="font-condensed" style="font-size:2.8rem;color:var(--gold);letter-spacing:0.05em;">VERNILAK</div>
+          <div style="font-size:0.65rem;letter-spacing:0.15em;color:var(--muted);margin-top:0.4rem;text-transform:uppercase;">Premium Lacquers</div>
+          <div style="margin-top:0.75rem;font-size:0.75rem;color:var(--muted);">Лакове за мебели</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Info strip below -->
+    <div class="reveal" style="margin-top:2rem;padding:1.75rem 2rem;background:var(--card);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;gap:1rem;flex-wrap:wrap;">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+      <p style="font-size:0.85rem;color:var(--muted);text-align:center;">
+        Не намирате нужния цвят? <a href="#contact" style="color:var(--gold);text-decoration:none;border-bottom:1px solid rgba(201,169,110,0.3);">Свържете се с нас</a> — можем да съвпадем почти всеки нюанс по ваша спецификация.
+      </p>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════
+     CTA BANNER
+═══════════════════════════════════════════ -->
+<section style="padding:6rem 0;background:var(--card);border-top:1px solid var(--border);border-bottom:1px solid var(--border);overflow:hidden;position:relative;">
+  <div style="position:absolute;inset:0;background:radial-gradient(ellipse 80% 100% at 50% 50%,rgba(201,169,110,0.06),transparent 60%);"></div>
+  <div class="max-w-5xl mx-auto px-6 text-center relative z-10">
+    <p class="reveal font-condensed" style="font-size:0.85rem;letter-spacing:0.3em;color:var(--gold);text-transform:uppercase;margin-bottom:1.5rem;">Безплатна консултация</p>
+    <h2 class="font-display reveal reveal-delay-1" style="font-size:clamp(2.5rem,6vw,5.5rem);line-height:1.05;font-weight:600;margin-bottom:2rem;">
+      Имате стара кухня или<br>
+      <em style="font-style:italic;color:var(--gold);">нови МДФ детайли?</em>
+    </h2>
+    <p class="reveal reveal-delay-2" style="font-size:1rem;color:var(--muted);max-width:480px;margin:0 auto 2.5rem;line-height:1.8;">
+      Свържете се с нас за оферта. Отговаряме в рамките на 24 часа.
+    </p>
+    <div class="reveal reveal-delay-3" style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
+      <a href="tel:+359894891113" class="btn-primary">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10a19.79 19.79 0 01-3.07-8.67A2 2 0 012 .84h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+        <span>0894 891 113</span>
+      </a>
+      <a href="viber://chat?number=+359894891113" class="btn-primary" style="border-color:rgba(115,96,242,0.5);color:rgba(115,96,242,0.9);">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M11.4 0C5.1 0 0 4.8 0 10.7c0 3.5 1.8 6.7 4.6 8.7v3.6l3.4-1.9c1.1.3 2.2.5 3.4.5 6.3 0 11.4-4.8 11.4-10.7C22.8 4.8 17.7 0 11.4 0zm1.1 14.4l-2.9-3.1-5.6 3.1 6.2-6.6 3 3.1 5.5-3.1-6.2 6.6z"/></svg>
+        <span>Viber съобщение</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════
+     FOOTER / CONTACT
+═══════════════════════════════════════════ -->
+<footer id="contact" class="footer-bg" style="padding:5rem 0 2rem;">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10">
+
+    <!-- Top: Logo + Contact info + Map placeholder -->
+    <div style="display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:4rem;margin-bottom:4rem;flex-wrap:wrap;" class="footer-grid">
+
+      <!-- Brand -->
+      <div>
+        <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:1.5rem;">
+          <div style="width:2px;height:2.2rem;background:var(--gold);"></div>
+          <div>
+            <div class="font-display" style="font-size:1.3rem;font-weight:600;color:var(--text);">София Колор ЕООД</div>
+            <div style="font-size:0.6rem;letter-spacing:0.2em;color:var(--muted);text-transform:uppercase;">Финиш с характер</div>
+          </div>
+        </div>
+        <p style="color:var(--muted);font-size:0.88rem;line-height:1.9;max-width:300px;">
+          Специализирани в боядисване и финиширане на мебели и дървени повърхности в гр. София.
+        </p>
+        <div style="display:flex;gap:0.75rem;margin-top:1.5rem;">
+          <a href="viber://chat?number=+359894891113" style="width:36px;height:36px;background:rgba(115,96,242,0.15);border:1px solid rgba(115,96,242,0.3);display:flex;align-items:center;justify-content:center;transition:all 0.3s;" onmouseover="this.style.background='rgba(115,96,242,0.3)'" onmouseout="this.style.background='rgba(115,96,242,0.15)'">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="rgba(115,96,242,0.9)"><path d="M11.4 0C5.1 0 0 4.8 0 10.7c0 3.5 1.8 6.7 4.6 8.7v3.6l3.4-1.9c1.1.3 2.2.5 3.4.5 6.3 0 11.4-4.8 11.4-10.7C22.8 4.8 17.7 0 11.4 0zm1.1 14.4l-2.9-3.1-5.6 3.1 6.2-6.6 3 3.1 5.5-3.1-6.2 6.6z"/></svg>
+          </a>
+          <a href="tel:+359894891113" style="width:36px;height:36px;background:rgba(201,169,110,0.08);border:1px solid rgba(201,169,110,0.2);display:flex;align-items:center;justify-content:center;transition:all 0.3s;" onmouseover="this.style.background='rgba(201,169,110,0.18)'" onmouseout="this.style.background='rgba(201,169,110,0.08)'">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10a19.79 19.79 0 01-3.07-8.67A2 2 0 012 .84h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Contact details -->
+      <div>
+        <div style="font-size:0.65rem;letter-spacing:0.2em;color:var(--gold);text-transform:uppercase;margin-bottom:1.5rem;">📍 Контакт</div>
+        <div style="display:flex;flex-direction:column;gap:1.25rem;">
+          <div>
+            <div style="font-size:0.7rem;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.3rem;">Адрес</div>
+            <div style="font-size:0.9rem;color:var(--text);line-height:1.6;">гр. София, кв. Военна рампа,<br>ул. „Коце Ципушев" 10-12</div>
+          </div>
+          <div>
+            <div style="font-size:0.7rem;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.3rem;">Телефон</div>
+            <a href="tel:+359894891113" style="font-size:1.05rem;color:var(--text);text-decoration:none;border-bottom:1px solid rgba(201,169,110,0.3);padding-bottom:2px;transition:color 0.3s;" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--text)'">0894 891 113</a>
+          </div>
+          <div>
+            <div style="font-size:0.7rem;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.3rem;">Viber</div>
+            <a href="viber://chat?number=+359894891113" style="font-size:0.9rem;color:rgba(115,96,242,0.9);text-decoration:none;" onmouseover="this.style.opacity='0.7'" onmouseout="this.style.opacity='1'">Изпратете съобщение →</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick links -->
+      <div>
+        <div style="font-size:0.65rem;letter-spacing:0.2em;color:var(--gold);text-transform:uppercase;margin-bottom:1.5rem;">Навигация</div>
+        <div style="display:flex;flex-direction:column;gap:0.9rem;">
+          <a href="#about" style="font-size:0.9rem;color:var(--muted);text-decoration:none;transition:color 0.3s;" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--muted)'">За нас</a>
+          <a href="#services" style="font-size:0.9rem;color:var(--muted);text-decoration:none;transition:color 0.3s;" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--muted)'">Нашите услуги</a>
+          <a href="#colors" style="font-size:0.9rem;color:var(--muted);text-decoration:none;transition:color 0.3s;" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--muted)'">Цветове и каталози</a>
+          <a href="#contact" style="font-size:0.9rem;color:var(--muted);text-decoration:none;transition:color 0.3s;" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--muted)'">Контакт</a>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Bottom bar -->
+    <div style="border-top:1px solid var(--border);padding-top:2rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;">
+      <div style="font-size:0.75rem;color:var(--muted);">
+        © 2025 София Колор ЕООД. Всички права запазени.
+      </div>
+      <div style="display:flex;align-items:center;gap:0.5rem;">
+        <div style="width:6px;height:6px;border-radius:50%;background:var(--gold);animation:pulse 2s infinite;"></div>
+        <span style="font-size:0.72rem;color:var(--muted);letter-spacing:0.05em;">Приемаме нови поръчки</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+<!-- ═══════════════════════════════════════════
+     VIBER FAB
+═══════════════════════════════════════════ -->
+<a href="viber://chat?number=+359894891113" class="viber-fab" title="Пишете ни в Viber">
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M11.4 0C5.1 0 0 4.8 0 10.7c0 3.5 1.8 6.7 4.6 8.7v3.6l3.4-1.9c1.1.3 2.2.5 3.4.5 6.3 0 11.4-4.8 11.4-10.7C22.8 4.8 17.7 0 11.4 0zm1.1 14.4l-2.9-3.1-5.6 3.1 6.2-6.6 3 3.1 5.5-3.1-6.2 6.6z"/></svg>
+
+  <!-- Tooltip -->
+  <div style="position:absolute;right:calc(100% + 0.75rem);top:50%;transform:translateY(-50%);background:rgba(5,5,5,0.95);border:1px solid rgba(255,255,255,0.1);padding:0.4rem 0.8rem;white-space:nowrap;font-size:0.72rem;letter-spacing:0.05em;color:white;backdrop-filter:blur(8px);pointer-events:none;opacity:0;transition:opacity 0.3s;" class="viber-tooltip">
+    Viber съобщение
+  </div>
+</a>
+
+<style>
+  .viber-fab:hover .viber-tooltip { opacity: 1; }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(1.3); }
+  }
+</style>
+
+
+<!-- ═══════════════════════════════════════════
+     RESPONSIVE OVERRIDES
+═══════════════════════════════════════════ -->
+<style>
+@media (max-width: 1024px) {
+  .about-grid { grid-template-columns: 1fr !important; gap: 3rem !important; }
+  .about-visual { height: 360px !important; }
+  .footer-grid { grid-template-columns: 1fr 1fr !important; }
+}
+@media (max-width: 768px) {
+  .services-grid { grid-template-columns: 1fr !important; }
+  .color-grid { grid-template-columns: 1fr 1fr !important; }
+  .footer-grid { grid-template-columns: 1fr !important; gap: 2.5rem !important; }
+  .about-float-card { display: none !important; }
+}
+@media (max-width: 480px) {
+  .color-grid { grid-template-columns: 1fr !important; }
+}
+</style>
+
+
+<!-- ═══════════════════════════════════════════
+     JS: Scroll reveal + Nav
+═══════════════════════════════════════════ -->
+<script>
+  // Nav scroll effect
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  // Intersection observer for reveals
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // Smooth anchor scrolling with offset
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const target = document.querySelector(a.getAttribute('href'));
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
