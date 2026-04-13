@@ -7,7 +7,7 @@
 <script src="https://cdn.tailwindcss.com"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=DM+Sans:wght@300;400;500&family=Bebas+Neue&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Bebas+Neue&display=swap" rel="stylesheet">
 
 <style>
   :root {
@@ -29,7 +29,6 @@
   body {
     background: var(--bg);
     color: var(--text);
-    font-family: 'DM Sans', sans-serif;
     font-weight: 300;
     overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
@@ -47,9 +46,73 @@
   }
 
   /* ── Typography ── */
-  .font-display { font-family: 'Cormorant Garamond', serif; }
+  .font-display  { font-family: 'Bricolage Grotesque', sans-serif; }
   .font-condensed { font-family: 'Bebas Neue', sans-serif; letter-spacing: 0.05em; }
-  .font-body { font-family: 'DM Sans', sans-serif; }
+  .font-body     { font-family: 'Plus Jakarta Sans', sans-serif; }
+
+  /* ── Body font ── */
+  body { font-family: 'Plus Jakarta Sans', sans-serif; }
+
+  /* ─────────────────────────────────────────
+     DARK MODE  (toggled via body.dark)
+  ───────────────────────────────────────── */
+  body.dark {
+    --bg:        #080806;
+    --card:      #1E1A16;
+    --card2:     #261F18;
+    --border:    rgba(212,146,78,0.13);
+    --gold:      #D4924E;
+    --gold-light:#EDD5AA;
+    --text:      #F2EDE5;
+    --muted:     rgba(242,237,229,0.48);
+  }
+  body.dark .hero-bg {
+    background:
+      radial-gradient(ellipse 80% 60% at 50% 100%, rgba(212,146,78,0.08) 0%, transparent 70%),
+      radial-gradient(ellipse 60% 40% at 80% 20%, rgba(212,146,78,0.04) 0%, transparent 60%),
+      #080806;
+  }
+  body.dark nav.scrolled {
+    background: rgba(8,8,6,0.92);
+  }
+  /* Service cards bg on dark */
+  body.dark .service-card    { background: var(--card); }
+  body.dark .color-badge     { background: var(--card); }
+  /* About visual inner dark bg */
+  body.dark .about-visual-inner { background: #1E1A16; }
+
+  /* ── Smooth colour transitions everywhere ── */
+  *, *::before, *::after {
+    transition-property: background-color, border-color, color;
+    transition-duration: 0.35s;
+    transition-timing-function: cubic-bezier(0.4,0,0.2,1);
+  }
+  /* But NOT transform / opacity (would break animations) */
+  .reveal, .reveal *, nav, #hero-logo, .bento-parallax-bg,
+  .btn-primary, .btn-primary::before {
+    transition: none;
+  }
+  .reveal       { transition: opacity 0.9s cubic-bezier(0.16,1,0.3,1), transform 0.9s cubic-bezier(0.16,1,0.3,1); }
+  nav           { transition: background 0.5s, backdrop-filter 0.5s, padding 0.5s; }
+  #hero-logo .logo-sc   { transition: font-size 0.55s cubic-bezier(0.16,1,0.3,1), color 0.3s; }
+  .btn-primary          { transition: color 0.4s; }
+  .btn-primary::before  { transition: transform 0.4s cubic-bezier(0.16,1,0.3,1); }
+  .bento-parallax-bg    { transition: transform 0.08s linear, filter 0.5s; }
+
+  /* ── Dark mode toggle button ── */
+  #dark-toggle {
+    display: flex; align-items: center; justify-content: center;
+    width: 2.1rem; height: 2.1rem;
+    border: 1px solid var(--border);
+    background: transparent;
+    cursor: pointer;
+    color: var(--muted);
+    border-radius: 0;
+    padding: 0;
+    transition: border-color 0.3s, color 0.3s, background 0.3s !important;
+    flex-shrink: 0;
+  }
+  #dark-toggle:hover { border-color: var(--gold); color: var(--gold); background: rgba(212,146,78,0.06); }
 
   /* ── Gold gradient text ── */
   .text-gold { color: var(--gold); }
@@ -113,7 +176,7 @@
     transition: font-size 0.55s cubic-bezier(0.16,1,0.3,1), color 0.3s;
   }
   #hero-logo .logo-full {
-    font-family: 'DM Sans', sans-serif;
+    font-family: 'Plus Jakarta Sans', sans-serif;
     font-size: 0.62rem;
     letter-spacing: 0.28em;
     text-transform: uppercase;
@@ -180,7 +243,7 @@
     background: transparent;
     color: var(--gold);
     border: 1px solid var(--gold);
-    font-family: 'DM Sans', sans-serif;
+    font-family: 'Plus Jakarta Sans', sans-serif;
     font-size: 0.8rem;
     font-weight: 400;
     letter-spacing: 0.2em;
@@ -378,7 +441,7 @@
     font-size: 0.65rem;
     letter-spacing: 0.15em;
     text-transform: uppercase;
-    font-family: 'DM Sans', sans-serif;
+    font-family: 'Plus Jakarta Sans', sans-serif;
   }
 </style>
 </head>
@@ -401,13 +464,22 @@
     <!-- Spacer (hero-logo overlaps left) -->
     <div style="width:160px;"></div>
 
-    <!-- Desktop nav links -->
+    <!-- Desktop nav links + dark toggle -->
     <div class="hidden md:flex items-center gap-8">
-      <a href="#about" style="font-size:0.75rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color 0.3s;" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--muted)'">За нас</a>
-      <a href="#services" style="font-size:0.75rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color 0.3s;" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--muted)'">Услуги</a>
-      <a href="#gallery" style="font-size:0.75rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color 0.3s;" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--muted)'">Галерия</a>
-      <a href="#colors" style="font-size:0.75rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color 0.3s;" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--muted)'">Цветове</a>
-      <a href="#contact" class="btn-primary" style="padding:0.6rem 1.4rem;">
+      <a href="#about"    style="font-family:'Plus Jakarta Sans',sans-serif;font-size:0.72rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);text-decoration:none;" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--muted)'">За нас</a>
+      <a href="#services" style="font-family:'Plus Jakarta Sans',sans-serif;font-size:0.72rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);text-decoration:none;" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--muted)'">Услуги</a>
+      <a href="#gallery"  style="font-family:'Plus Jakarta Sans',sans-serif;font-size:0.72rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);text-decoration:none;" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--muted)'">Галерия</a>
+      <a href="#colors"   style="font-family:'Plus Jakarta Sans',sans-serif;font-size:0.72rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);text-decoration:none;" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--muted)'">Цветове</a>
+
+      <!-- Dark / Light toggle -->
+      <button id="dark-toggle" aria-label="Превключи тема" title="Dark / Light режим">
+        <!-- Sun icon (shown in dark mode) -->
+        <svg id="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="display:none;"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+        <!-- Moon icon (shown in light mode) -->
+        <svg id="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+
+      <a href="#contact" class="btn-primary" style="padding:0.6rem 1.4rem;font-family:'Plus Jakarta Sans',sans-serif;">
         <span>Контакт</span>
       </a>
     </div>
@@ -1002,7 +1074,7 @@
 
 /* ── Label ── */
 .bento-label {
-  font-family: 'DM Sans', sans-serif;
+  font-family: 'Plus Jakarta Sans', sans-serif;
   font-size: 0.75rem;
   font-weight: 400;
   letter-spacing: 0.18em;
@@ -1059,7 +1131,7 @@
 }
 
 .bento-hover-desc {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: 'Bricolage Grotesque', sans-serif;
   font-size: 1rem;
   font-style: italic;
   color: var(--gold-light, #EDD5AA);
@@ -1275,7 +1347,26 @@
      JS: Scroll reveal + Nav
 ═══════════════════════════════════════════ -->
 <script>
-  // ── Hero Logo: shrink on scroll (like nakedkitchens.com) ──
+  // ── Dark mode toggle ──────────────────────────────────────────────────────
+  const btn      = document.getElementById('dark-toggle');
+  const iconSun  = document.getElementById('icon-sun');
+  const iconMoon = document.getElementById('icon-moon');
+
+  // Restore saved preference
+  if (localStorage.getItem('scDark') === '1') {
+    document.body.classList.add('dark');
+    iconSun.style.display  = 'block';
+    iconMoon.style.display = 'none';
+  }
+
+  btn.addEventListener('click', () => {
+    const isDark = document.body.classList.toggle('dark');
+    localStorage.setItem('scDark', isDark ? '1' : '0');
+    iconSun.style.display  = isDark ? 'block' : 'none';
+    iconMoon.style.display = isDark ? 'none'  : 'block';
+  });
+
+  // ── Hero Logo: shrink on scroll ──────────────────────────────────────────
   const heroLogo = document.getElementById('hero-logo');
   const nav = document.getElementById('nav');
   const SHRINK_START = 60;
